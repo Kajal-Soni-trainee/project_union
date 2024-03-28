@@ -1,0 +1,94 @@
+<html>
+    <head>
+        <style>
+             .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .myform {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            padding: 20px 50px;
+            border: 2px solid black;
+            background-color: rgb(66, 185, 206);
+            border: 2px solid black;
+        }
+
+        .col {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+
+        label {
+            font-size: 20px;
+        }
+
+        .err {
+            color: red;
+        }
+        .sub_con{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1>Kajal Soni</h1>
+            <h1>Login</h1>
+            <form class="myform" method="post" action="/login" onsubmit="return validate()">
+                
+                <div class="col"><label for="email">Enter Email</label><span class="err"></span><input type="text"
+                        id="email" name="email" /></div>
+                <div class="col"><label for="pass">Enter Password</label><span class="err"></span><input type="password"
+                        id="pass" name="pass" />
+                </div>
+                <h3 style="color:red"><%=errMsg%></h3>
+                <div><input type="submit" value="submit" /></div>
+            </form>
+            <div><a href="/forget_pass?email=<%=email%>">forget Password</a></div>
+            <!-- <div class="sub_con">
+                <h1 style="color:green"></h1>
+            </div> -->
+        </div>
+       <script>
+        function validate(){
+            console.log("calling login");
+            let email = document.getElementById("email");
+            let pass=document.getElementById("pass");
+            if(email.value==""){
+             let div=email.parentElement;
+             div.getElementsByTagName('span')[0].innerHTML="Please enter your email";
+             return false;
+            }
+            else{
+            let div=email.parentElement;
+            div.getElementsByTagName('span')[0].innerHTML="";
+            }
+            if(pass.value==""){
+            let div=pass.parentElement;
+            div.getElementsByTagName('span')[0].innerHTML="Please enter your password";
+             return false;
+            }
+            else{
+            let div=pass.parentElement;
+             div.getElementsByTagName('span')[0].innerHTML="";
+            }
+            return true;
+        }
+       </script>
+    </body>
+</html>

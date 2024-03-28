@@ -1,0 +1,36 @@
+<html>
+    <head>
+        <style>
+.container{
+    display:flex;
+    flex-direction: column;
+    justify-content:center;
+    align-items: center;
+}
+table,tr,td,th{
+    border:2px solid black;
+    border-collapse: collapse;
+}
+        </style>
+    </head>
+    <body>
+     <div class="container">
+    <table>
+        <tr>
+            <th>User Name</th>
+            <th>User Email</th>
+            <th>User Contact</th>
+          
+        </tr>
+        <%result.forEach((element)=>{%>
+            <tr>
+                <td><%=element.u_name%></td>
+                <td><%=element.u_email%></td>
+                <td><%=element.u_contact%></td>
+                
+            </tr>
+        <%})%>
+    </table>
+     </div>
+    </body>
+</html>

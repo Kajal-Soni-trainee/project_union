@@ -1,0 +1,160 @@
+<html>
+
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <style>
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap:10px;
+        }
+
+        .myform {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            padding: 20px 50px;
+            border: 2px solid black;
+            background-color: rgb(66, 185, 206);
+        }
+
+        .col {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+
+        label {
+            font-size: 20px;
+        }
+
+        .err {
+            color: red;
+        }
+        .sub_con{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+
+        <h1>Kajal Soni</h1>
+        <form class="myform" method="post" action="/action" onsubmit="return validate()">
+            <div class="col"><label for="uname">Enter your Name</label><span class="err"></span><input type="text"
+                    id="uname" name="uname" /></div>
+            <div class="col"><label for="uemail">Enter your Email</label><span class="err"></span><input type="text"
+                    id="uemail" name="uemail" /></div>
+            <div class="col"><label for="ucontact">Enter your Contact</label><span class="err"></span><input type="text"
+                    id="ucontact" name="ucontact" /></div>
+            <div><input type="submit" value="submit" /></div>
+        </form>
+        <div style="color:red"><%=errMsg%></div>
+        <div>Already Registered? <a href="/login">Login</a></div>
+        <div class="sub_con"></div>
+    </div>
+    
+    <% if(isReg){%>
+        <script>
+            
+
+            let sub_con = document.getElementsByClassName("sub_con")[0];
+
+            sub_con.innerHTML+=`<h1 style="color:green">Thank you for the registration</h1>`;
+            sub_con.innerHTML+=`<h2 style="color:blue">please copy below link to create password</h2>`
+            sub_con.innerHTML+=`<a href="#" id="opt">http://localhost:8000/pass?id=<%=id%>&otp=<%=otp%></a>`;
+        
+            setTimeout(()=>{
+            sub_con.innerHTML=`<h1 style="color:red">Sorry! our time out please try again</h1>`;
+            $.ajax({
+        url: `http://localhost:8000/checkdb/?id=<%=id%>`,
+        method: 'GET',
+        crossDomain: true,
+        processData: false,
+        contentType: false,
+            });
+            },50000)
+          
+         console.log(count);
+           
+        </script>
+        <%}%>  
+            <script>
+                function validate() {
+                    let u_name = document.getElementById("uname");
+                    let u_email = document.getElementById("uemail");
+                    let u_contact = document.getElementById('ucontact');
+                    if (u_name.value == "") {
+                        let div = u_name.parentElement;
+                        div.getElementsByTagName("span")[0].innerHTML = "please enter your name";
+                        return false;
+                    }
+                    else {
+                        let div = u_name.parentElement;
+                        div.getElementsByTagName("span")[0].innerHTML = "";
+                    }
+                    let namePtn = /[0-9]/;
+                    if (namePtn.test(u_name.value)) {
+                        let div = u_name.parentElement;
+                        div.getElementsByTagName("span")[0].innerHTML = "only charaters are allowed in name";
+                        return false;
+                    }
+                    else {
+                        let div = u_name.parentElement;
+                        div.getElementsByTagName("span")[0].innerHTML = "";
+                    }
+                    if (u_email.value == "") {
+                        let div = u_email.parentElement;
+                        div.getElementsByTagName("span")[0].innerHTML = "please enter your email";
+                        return false;
+                    }
+                    else {
+                        let div = u_email.parentElement;
+                        div.getElementsByTagName("span")[0].innerHTML = "";
+                    }
+                    let email_ptn = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+                    if (!email_ptn.test(u_email.value)) {
+                        let div = u_email.parentElement;
+                        div.getElementsByTagName("span")[0].innerHTML = "please enter correct email";
+                        return false;
+                    }
+                    else {
+                        let div = u_email.parentElement;
+                        div.getElementsByTagName("span")[0].innerHTML = "";
+                    }
+                    if (u_contact.value == "") {
+                        let div = u_contact.parentElement;
+                        div.getElementsByTagName("span")[0].innerHTML = "please enter your contact number";
+                        return false;
+                    }
+                    else {
+                        let div = u_contact.parentElement;
+                        div.getElementsByTagName("span")[0].innerHTML = "";
+                    }
+                    let con_ptn = /[0-9]{10}/;
+                    if (!con_ptn.test(u_contact.value)) {
+                        let div = u_contact.parentElement;
+                        div.getElementsByTagName("span")[0].innerHTML = "contact number should contain only 10 digits";
+                        return false;
+                    }
+                    else {
+                        let div = u_contact.parentElement;
+                        div.getElementsByTagName("span")[0].innerHTML = "";
+                    }
+                    return true;
+                }
+            </script>
+</body>
+
+</html>
